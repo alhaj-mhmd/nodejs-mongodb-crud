@@ -37,6 +37,7 @@ createStudent();
 
 // select all students in the collection
 async function getstudents(){
+    // find({age:{$gte:5,$lte:60}}) // this is how to use the comparison in mongodb 
 const students = await Student.find({name:'ali'}).limit(1).sort({name}).select({name:1});
 console.log(students);
 }
