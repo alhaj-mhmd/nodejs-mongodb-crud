@@ -18,7 +18,7 @@ const Student = mongoose.model('Student', studentschema);
 async function createStudent() {
     //3-create instance of the model student
     const student = new Student({
-        name: 'Ahmad',
+        name: 'ali',
         age: 33,
         isActive: true,
         phones: ['123', '123']
@@ -33,3 +33,12 @@ createStudent();
 
 // now do: nodemon index to run the project
 // open mongodb compass to check the result
+
+
+// select all students in the collection
+async function getstudents(){
+const students = await Student.find({name:'ali'}).limit(1).sort({name}).select({name:1});
+console.log(students);
+}
+
+getstudents();
