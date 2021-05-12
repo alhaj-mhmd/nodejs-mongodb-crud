@@ -55,4 +55,29 @@ async function getStudents(pageNumber = 1, pageSize = 2) {
         limit(pageSize);
 }
 
-getStudents(2,2);
+getStudents(2, 2);
+
+async function updateStudent(id) {
+    // first way of update to find the item then update it 
+    const student = await Student.findById(id);
+    if (!student) return;
+    // set data
+    // first way
+    student.name = "hani";
+    student.isActive = false;
+    const result = student.save();
+    //second way
+    student.set({
+        name: "hani",
+        isActive: false
+    });
+
+    // second way of update is to update the item directly 
+    const student = await Student.update({_id:id},{
+        $set:{
+            name:"hani",
+            isActive:false
+        }
+    })
+}
+updateStudent('');
