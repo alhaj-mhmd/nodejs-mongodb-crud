@@ -5,10 +5,13 @@ mongoose.connect('mongodb://localhost/Schooldb', { useNewUrlParser: true, useUni
 
 //1-this is student schema
 const studentschema = new mongoose.Schema({
-    name: String,
-    age: Number,
-    RegDate: { type: Date, defualt: Date.now() },
+    name: {type: String, required:true},
     IsActive: Boolean,
+    age: {type:Number,min:6,max:99,
+    required: function(){return this.isActive }
+    },
+    RegDate: { type: Date, defualt: Date.now() },
+   
     Phones: [String]
 });
 
@@ -73,11 +76,16 @@ async function updateStudent(id) {
     });
 
     // second way of update is to update the item directly 
-    const student = await Student.update({_id:id},{
-        $set:{
-            name:"hani",
-            isActive:false
+    const student = await Student.update({ _id: id }, {
+        $set: {
+            name: "hani",
+            isActive: false
         }
     })
 }
-updateStudent('');
+
+// delete student
+async function removeStudent(id) {
+    const student = await Student.findByIdAndRemove(id);
+}
+
